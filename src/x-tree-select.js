@@ -38,12 +38,13 @@
                 value: 'value',
                 child: 'child'
             },
+            animationDuration: 600,
             searchable: false,
         }, options);
 
         // store navigation for trace where are we?
         $.navigatex = [];
-
+        
         // store last navigtion fot buffer use
         $.lastx = {
             title: '',
@@ -102,7 +103,7 @@
                 xtsel.addClass("loading");
                 setTimeout(function () {
                     xtsel.removeClass("loading");
-                }, 600);
+                }, settings.animationDuration);
 
                 $.currentCounter = $(this).data('trcounter');
                 $.lastx.title = $.xtsStore[$.currentCounter].mainTitle;
@@ -183,9 +184,8 @@
             $(document).on('click', '#xtsel-list li', function (e) {
                 // has child & no parent selecatble
                 if ($(this).hasClass('xtsel-childer') && !$(e.target).hasClass('xtsel-selectable')) {
-          
                     // Prevent pushing "tmp" to the navigatex if clicked repeatedly while in transition which messes up the history
-                    if ($("#xtsel-list").addClass($.treeselect_animation[$.xtsStore[$.currentCounter].transition])) {
+                    if ($("#xtsel-list").hasClass($.treeselect_animation[$.xtsStore[$.currentCounter].transition])) {
                         return;
                     }
                   
@@ -209,12 +209,12 @@
                         $.xts.showTree($.xts.findTree($.xtsStore[$.currentCounter].datatree, $(xself).data('id')));
                         // remove effect
                         $("#xtsel-list").removeClass($.treeselect_animation[$.xtsStore[$.currentCounter].transition]);
-                    }, 600);
+                    }, settings.animationDuration);
 
                 } else if ($(this).hasClass('xtsel-back')) { // if click on back
                   
                     // Prevent issue when repeatedly clicking back
-                    if ($("#xtsel-list").addClass($.treeselect_animation[$.xtsStore[$.currentCounter].transition])) {
+                    if ($("#xtsel-list").hasClass($.treeselect_animation[$.xtsStore[$.currentCounter].transition])) {
                         return;
                     }
                   
@@ -242,7 +242,7 @@
                             $.xts.showTree(lst);
                         }
                         $("#xtsel-list").removeClass($.treeselect_animation[$.xtsStore[$.currentCounter].transition]);
-                    }, 600);
+                    }, settings.animationDuration);
                 } else if ($(e.target).hasClass('search') || $(e.target).hasClass('srch')) {
                     // console.log('x');
                 } else { // choose|select value
